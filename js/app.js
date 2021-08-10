@@ -44,12 +44,12 @@ const buildthenav = function () {
     att.value = `#${secid}`;
     linkinlist.setAttributeNode(att);
     //add scrollintoview to the link
-    linkinlist.addEventListener("click",function(e){
+    linkinlist.addEventListener("click", function (e) {
       e.preventDefault();
-      document.querySelector(this.getAttribute("href")).scrollIntoView({
-        behavior: "smooth"
-      })
-    })
+      document.querySelector(`#${secid}`).scrollIntoView({
+        behavior: "smooth",
+      });
+    });
     //add the link to the list item
     newlist.appendChild(linkinlist);
     //add the list to the nacbar element
@@ -116,4 +116,3 @@ window.addEventListener("scroll", function () {
   activation();
   displayBackToTopButton();
 });
-
