@@ -12,4 +12,4 @@
 
 *Navbar is crated by JS based on sections, by click on the link, window will be scrolled to the section.
 
-*There is a backToTop button which will is default hidden, when page scroll down, it will be displayed by JS.
+*There is a backToTop button which is default hidden, when page scrolls down, it will be displayed by JS.
