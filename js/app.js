@@ -19,83 +19,101 @@
  */
 const sections = document.querySelectorAll("section");
 const navbarlist = document.getElementById("navbar__list");
+const heading = document.querySelector("h1");
+const backtotopbutton = document.querySelector(".backtotop");
 
 /**
  * End Global Variables
- * Start Helper Functions
- *
- */
 
-/**
- * End Helper Functions
  * Begin Main Functions
  *
  */
 
 // build the nav
-const buildnavbar = function () {
-  let navitems = "";
+const buildthenav = function () {
   sections.forEach((section) => {
-    const sectionid = section.id;
-    const sectionname = section.dataset.nav;
-    navitems += `<li class = "menu__link"><a href = "#${sectionid}">${sectionname}</a></li>`;
+    let secid = section.id;
+    //create new list element
+    const newlist = document.createElement("li");
+    newlist.classList.add("menu__link");
+    //create new link element in the list element
+    const linkinlist = document.createElement("a");
+    linkinlist.textContent = secid;
+    //get the href attribute
+    let att = document.createAttribute("href");
+    att.value = `#${secid}`;
+    linkinlist.setAttributeNode(att);
+    //add scrollintoview to the link
+    linkinlist.addEventListener("click",function(e){
+      e.preventDefault();
+      document.querySelector(this.getAttribute("href")).scrollIntoView({
+        behavior: "smooth"
+      })
+    })
+    //add the link to the list item
+    newlist.appendChild(linkinlist);
+    //add the list to the nacbar element
+    navbarlist.appendChild(newlist);
   });
-  navbarlist.innerHTML = navitems;
 };
 
-buildnavbar();
+buildthenav();
 
 // Add class 'active' to section when near top of viewport
 // get section top relative position
-const getposition = function(section){
+const getposition = function (section) {
   return section.getBoundingClientRect().top;
-}
+};
 
-//add active to section
-const addactive = function(section){
-  section.classList.add('active');
-}
-
-//remove active from section
-const removeactive = function(section){
-  section.classList.remove('active');
-}
-
-
-const activation = function(){
+const activation = function () {
   //use section1 as default relative position
   let top = Math.abs(getposition(section1));
   let activesection = section1;
-  sections.forEach((section)=>{
+  sections.forEach((section) => {
     //remove active class first
-    removeactive(section);
+    section.classList.remove("active");
     //get the section whihc has the smallest relative top position abs value
     let newposition = Math.abs(getposition(section));
-    if(newposition<top){
+    if (newposition < top) {
       activesection = section;
       top = newposition;
     }
-  })
+  });
   //add active for the section shosen
-  addactive(activesection);
-}
+  activesection.classList.add("active");
+};
 
 activation();
 
-window.addEventListener("scroll",activation);
+// back to top Button
+// get header bottom position
+const getbottom = function (element) {
+  return element.getBoundingClientRect().bottom;
+};
 
-// Scroll to anchor ID using scrollTO event
+// scrolltoTop function
+const scrollToTop = function () {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "smooth",
+  });
+};
 
-const scrollto = function(){
-  const sectionlinks = document.querySelectorAll('a');
-  sectionlinks.forEach((sectionlink)=>{
-    sectionlink.addEventListener('click', function(e){
-      e.preventDefault;
-      document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'})
-    })
-  })
-}
+// control the button display according to the viewport position
+const displayBackToTopButton = function () {
+  let headerposition = getbottom(heading);
+  if (headerposition < 0) {
+    backtotopbutton.setAttribute("style", "display: flex;");
+  } else {
+    backtotopbutton.setAttribute("style", "display: none;");
+  }
+};
 
-scrollto();
+backtotopbutton.addEventListener("click", heading.scrollIntoView());
 
+window.addEventListener("scroll", function () {
+  activation();
+  displayBackToTopButton();
+});
 

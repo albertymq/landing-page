@@ -103,6 +103,22 @@ section {
     z-index: 5;
 }
 
+/* Back to Top Button Styles*/
+.backtotop{
+    position: fixed;
+    z-index: 100;
+    top:74%;
+    left:1%;
+    width:3.5%;
+    height:9%;
+    font-family: 'Oxygen', Sans-Serif;
+    font-size: 1em;
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+}
+
 /* Footer Styles */
 .page__footer {
     background: #000;
